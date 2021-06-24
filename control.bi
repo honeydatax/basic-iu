@@ -14,6 +14,9 @@ public type control
 	tag as string
 	names as string
 	dc as any ptr
+	on_check as sub(as control)
+	on_click as sub
+	avalue as integer
 	redraw as sub(as control)
 	creat as sub ptr
 	size as integer
@@ -30,10 +33,29 @@ public sub labelRedraw(c1 as control)
 	put (c1.x,c1.y),c1.dc,pset
 end sub
 
+public sub oncheck(c1 as control)
+	dim xx as integer
+	dim yy as integer
+	dim bb as integer
+	dim res as integer
+	res=getmouse(xx,yy,,bb)
+	if bb=1 then
+		if xx>c1.x and yy>c1.y and xx<c1.x+c1.w and yy<c1.y+c1.h then
+			if c1.avalue<>0 then
+				c1.value=c1.value+1
+				if c1.value>1 then c1.value=0
+			end if 
+			c1.on_click()
+		end if
+	end if
+end sub 
+
 public sub labelCreate(c1 as control)
 	c1.dc=imagecreate(c1.w,c1.h,c1.bcolor)
+	c1.on_check=procptr(oncheck())
 	c1.redraw=procptr(labelRedraw())
 end sub
+
 
 public sub on_start(colors as integer)
 	screenres 640,480,4
