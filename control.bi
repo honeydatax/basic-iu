@@ -1,4 +1,7 @@
 dim shared sub1 as sub
+public const rose=5
+public const white=15
+public const black=0
 public type control
 	x as integer
 	y as integer
@@ -11,7 +14,7 @@ public type control
 	tag as string
 	names as string
 	dc as any ptr
-	redraw as sub ptr
+	redraw as sub(as control)
 	creat as sub ptr
 	size as integer
 end type 
@@ -22,15 +25,14 @@ end type
 
 
 public sub labelRedraw(c1 as control)
-	line c1.dc,(c1.x,c1.y)-(c1.x+c1.w,c1.y+c1.h),c1.bcolor,bf
-	line c1.dc,(c1.x,c1.y)-(c1.x+c1.w,c1.y+c1.h),c1.colors,b
-	draw string c1.dc,(c1.x,c1.y),c1.caption,c1.colors
+	line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.colors,b
+	draw string c1.dc,(5,5),c1.caption,c1.colors
 	put (c1.x,c1.y),c1.dc,pset
 end sub
 
 public sub labelCreate(c1 as control)
-	c1.dc=imagecreate(c1.w,c1.h,c1.colors)
-	c1.redraw=procptr(labelRedraw)
+	c1.dc=imagecreate(c1.w,c1.h,c1.bcolor)
+	c1.redraw=procptr(labelRedraw())
 end sub
 
 public sub on_start(colors as integer)
