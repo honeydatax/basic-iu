@@ -32,6 +32,18 @@ public function textSize(s as string)as integer
 	return len(s)*8
 end function
 
+public sub centerText(c1 as control)
+		dim xx as integer
+		dim xxx as integer
+		xx=textSize(c1.caption)
+		if xx<c1.w then
+			xxx=(c1.w-xx)/8/2
+			c1.caption=space(xxx)+c1.caption
+		end if
+end sub
+
+
+
 public sub labelRedraw(c1 as control)
 	line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.bcolor,bf
 	line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.colors,b
@@ -66,7 +78,6 @@ public sub labelCreate(c1 as control)
 	c1.on_check=procptr(oncheck())
 	c1.redraw=procptr(labelRedraw())
 end sub
-
 
 public sub on_start(colors as integer)
 	screenres 640,480,4
