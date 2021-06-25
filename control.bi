@@ -42,6 +42,19 @@ public sub centerText(c1 as control)
 		end if
 end sub
 
+public sub rigthText(c1 as control)
+		dim xx as integer
+		dim xxx as integer
+		xx=textSize(c1.caption)
+		if xx<c1.w then
+			xxx=(c1.w-xx)/8
+			xxx=xxx-1
+			if xxx<1 then xxx=0
+			c1.caption=space(xxx)+c1.caption
+		end if
+end sub
+
+
 
 
 public sub labelRedraw(c1 as control)
