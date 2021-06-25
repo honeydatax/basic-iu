@@ -14,11 +14,14 @@ public type control
 	value as integer
 	tag as string
 	names as string
+	count as integer
 	dc as any ptr
 	on_check as sub(as control)
+	on_checks as sub(()as control)
 	on_click as sub
 	avalue as integer
 	redraw as sub(as control)
+	redraws as sub(()as control)
 	creat as sub ptr
 	size as integer
 end type 
@@ -91,6 +94,81 @@ public sub labelCreate(c1 as control)
 	c1.on_check=procptr(oncheck())
 	c1.redraw=procptr(labelRedraw())
 end sub
+
+public sub optionRedraw(c1() as control)
+	dim i as integer
+	for i=0 to c1(0).count
+		line c1(i).dc,(0,0)-(c1(0).w-1,c1(0).h-1),c1(0).bcolor,bf
+		line c1(i).dc,(0,0)-(c1(0).w-1,c1(0).h-1),c1(0).colors,b
+		draw string c1(i).dc,(5,5),c1(i).caption,c1(0).colors
+		if c1(i).value<>0 then
+			circle c1(i).dc,(18,18),8,c1(0).colors,,,,f
+		end if
+		put (c1(i).x,c1(i).y),c1(i).dc,pset
+	next
+end sub
+
+
+
+
+
+public sub onOptionCheck(c1() as control)
+	dim xx as integer
+	dim yy as integer
+	dim bb as integer
+	dim res as integer
+	dim i as integer
+	dim ii as integer
+	res=getmouse(xx,yy,,bb)
+	if bb=1 then
+		for i=0 to c1(0).count
+			if xx>c1(i).x and yy>c1(i).y and xx<c1(i).x+c1(i).w and yy<c1(i).y+c1(i).h then
+				for ii=0 to c1(0).count
+					c1(ii).value=0
+				next
+				c1(i).value=1
+				c1(0).avalue=i
+				optionRedraw c1()
+				c1(0).on_click()
+			end if
+		next
+	end if
+end sub 
+
+
+
+
+
+
+
+public sub optionCreate(c1() as control)
+	dim i as integer
+	dim yy as integer
+	yy=c1(0).y
+	if c1(0).avalue>c1(0).count-1 then c1(0).avalue=0
+	for i=0 to c1(0).count
+		c1(i).count=c1(0).count
+		c1(i).on_checks=procptr(onOptionCheck())
+		c1(i).redraws=procptr(optionRedraw())
+		c1(i).x=c1(0).x
+		c1(i).y=yy
+		c1(i).w=c1(0).w
+		c1(i).h=c1(0).h
+		c1(i).bcolor=c1(0).bcolor
+		c1(i).colors=c1(0).colors
+		if c1(0).avalue=i then
+			c1(i).value=1
+		else
+			c1(i).value=0
+		end if
+		c1(i).dc=imagecreate(c1(0).w,c1(0).h,c1(0).bcolor)
+		c1(i).on_check=procptr(oncheck())
+		c1(i).redraw=procptr(labelRedraw())
+		yy=yy+c1(0).h
+	next
+end sub
+
+
 
 public sub on_start(colors as integer)
 	screenres 640,480,4
