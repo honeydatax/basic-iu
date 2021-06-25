@@ -30,6 +30,10 @@ end type
 public sub labelRedraw(c1 as control)
 	line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.colors,b
 	draw string c1.dc,(5,5),c1.caption,c1.colors
+	if c1.avalue<>0 and c1.value<>0 then
+		line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.colors
+		line c1.dc,(0,c1.h-1)-(c1.w-1,0),c1.colors
+	end if
 	put (c1.x,c1.y),c1.dc,pset
 end sub
 
@@ -43,7 +47,8 @@ public sub oncheck(c1 as control)
 		if xx>c1.x and yy>c1.y and xx<c1.x+c1.w and yy<c1.y+c1.h then
 			if c1.avalue<>0 then
 				c1.value=c1.value+1
-				if c1.value>1 then c1.value=0
+				if c1.value<>1 AND c1.value<>0 then c1.value=0
+				labelRedraw c1
 			end if 
 			c1.on_click()
 		end if
