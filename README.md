@@ -1,2 +1,2 @@
-# baic-iu
+# basic-iu
 Free basic user interface
