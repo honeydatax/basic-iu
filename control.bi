@@ -2,6 +2,7 @@ dim shared sub1 as sub
 public const rose=5
 public const white=15
 public const black=0
+public const texth=8
 public type control
 	x as integer
 	y as integer
@@ -26,6 +27,10 @@ public type label
 	controls as control
 end type
 
+
+public function textSize(s as string)as integer
+	return len(s)*8
+end function
 
 public sub labelRedraw(c1 as control)
 	line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.bcolor,bf
