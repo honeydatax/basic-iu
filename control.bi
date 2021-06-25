@@ -28,6 +28,7 @@ end type
 
 
 public sub labelRedraw(c1 as control)
+	line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.bcolor,bf
 	line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.colors,b
 	draw string c1.dc,(5,5),c1.caption,c1.colors
 	if c1.avalue<>0 and c1.value<>0 then
