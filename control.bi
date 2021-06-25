@@ -168,6 +168,40 @@ public sub optionCreate(c1() as control)
 	next
 end sub
 
+public sub percentRedraw(c1 as control)
+	dim xx as integer
+	dim xxx as integer
+	line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.bcolor,bf
+	line c1.dc,(0,0)-(c1.w-1,c1.h-1),c1.colors,b
+	if c1.value < 0 then c1.value = 0
+	if c1.value > 100 then c1.value = 100
+		xx=(c1.w-10)
+		if xx<1 then xx=1
+		xxx=(xx*c1.value)/100
+		line c1.dc,(5,5)-(5+xxx,c1.h-5),c1.colors,bf
+	put (c1.x,c1.y),c1.dc,pset
+end sub
+
+
+
+public sub onPercentCheck(c1 as control)
+	dim xx as integer
+	dim yy as integer
+	dim bb as integer
+	dim res as integer
+	res=getmouse(xx,yy,,bb)
+	if bb=1 then
+		if xx>c1.x and yy>c1.y and xx<c1.x+c1.w and yy<c1.y+c1.h then
+			c1.on_click()
+		end if
+	end if
+end sub 
+
+public sub percentCreate(c1 as control)
+	c1.dc=imagecreate(c1.w,c1.h,c1.bcolor)
+	c1.on_check=procptr(onPercentCheck())
+	c1.redraw=procptr(percentRedraw())
+end sub
 
 
 public sub on_start(colors as integer)
