@@ -203,6 +203,35 @@ public sub percentCreate(c1 as control)
 	c1.redraw=procptr(percentRedraw())
 end sub
 
+public sub destroydc(img as any ptr)
+	imageDestroy(img)
+end sub
+
+public sub pictureRedraw(c1 as control)
+	put (c1.x,c1.y),c1.dc,pset
+end sub
+
+
+
+public sub onPictureCheck(c1 as control)
+	dim xx as integer
+	dim yy as integer
+	dim bb as integer
+	dim res as integer
+	res=getmouse(xx,yy,,bb)
+	if bb=1 then
+		if xx>c1.x and yy>c1.y and xx<c1.x+c1.w and yy<c1.y+c1.h then
+			c1.on_click()
+		end if
+	end if
+end sub 
+
+public sub pictureCreate(c1 as control)
+	c1.dc=imagecreate(c1.w,c1.h)
+	bload c1.caption,c1.dc
+	c1.on_check=procptr(onpicturecheck())
+	c1.redraw=procptr(pictureRedraw())
+end sub
 
 public sub on_start(colors as integer)
 	screenres 640,480,4
