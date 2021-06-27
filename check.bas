@@ -1,7 +1,7 @@
 #include once "control.bi"
 public sub onexits()
 	beep()
-	sleep 900
+	buttonUp()
 end sub
 dim shared redraws as sub(as control)
 dim label1 as label

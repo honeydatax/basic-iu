@@ -1,4 +1,5 @@
 dim shared sub1 as sub
+public const pink=5
 public const rose=5
 public const white=15
 public const black=0
@@ -232,6 +233,20 @@ public sub pictureCreate(c1 as control)
 	c1.on_check=procptr(onpicturecheck())
 	c1.redraw=procptr(pictureRedraw())
 end sub
+
+
+public sub buttonUp()
+	dim xx as integer
+	dim yy as integer
+	dim bb as integer
+	dim res as integer
+	res=getmouse(xx,yy,,bb)
+	while bb=1
+		res=getmouse(xx,yy,,bb)
+	wend
+
+end sub 
+
 
 public sub on_start(colors as integer)
 	screenres 640,480,4
