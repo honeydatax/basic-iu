@@ -26,3 +26,4 @@ while 1=1
 	sleep 200
 	if inkey=chr(27) then system()
 wend
+imagedestroy(label1.controls.dc)
