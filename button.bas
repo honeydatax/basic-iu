@@ -1,9 +1,10 @@
 #include once "control.bi"
+dim shared redraws as sub(as control)
+dim shared label1 as label
 public sub onexits()
+	imagedestroy(label1.controls.dc)
 	system()
 end sub
-dim shared redraws as sub(as control)
-dim label1 as label
 dim color1 as integer=rose
 
 
