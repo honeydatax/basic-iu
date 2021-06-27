@@ -21,3 +21,4 @@ for i=0 to 100 step 10
 	sleep 500
 next
 sleep 10000
+imagedestroy(percents.dc)
