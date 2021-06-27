@@ -6,7 +6,7 @@ end sub
 dim shared redraws as sub(as control)
 dim options(10) as control
 dim color1 as integer=rose
-
+dim n as integer
 
 on_start color1
 
@@ -26,3 +26,7 @@ while 1=1
 	sleep 200
 	if inkey=chr(27) then system()
 wend
+
+for n=0 to options(0).count-1
+	imagedestroy(options(0).dc)
+next
