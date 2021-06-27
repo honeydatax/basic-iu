@@ -19,3 +19,4 @@ label1.controls.redraw(label1.controls)
 
 
 sleep 10000
+imagedestroy(label1.controls.dc)
