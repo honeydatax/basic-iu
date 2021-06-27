@@ -9,6 +9,8 @@ public type control
 	y as integer
 	w as integer
 	h as integer
+	ww as integer
+	hh as integer
 	colors as integer
 	bcolor as integer
 	caption as string
@@ -234,6 +236,40 @@ public sub pictureCreate(c1 as control)
 	c1.redraw=procptr(pictureRedraw())
 end sub
 
+public sub imageRedraw(c1 as control)
+	dim xx as integer
+	dim yy as integer
+	view (c1.x,c1.y)-(c1.x+c1.ww,c1.y+c1.hh),c1.bcolor
+	window screen (0,0)-(c1.w,c1.h)
+	
+	for yy=c1.h-1 to 0 step -1
+		for xx=c1.w-1 to 0 step -1
+			line(xx-1,yy-1)-(xx,yy),(point(xx,yy,c1.dc)),bf
+		next
+	next
+	view (0,0)-(639,479)
+	window screen (0,0)-(639,479)
+end sub
+
+public sub onimageCheck(c1 as control)
+	dim xx as integer
+	dim yy as integer
+	dim bb as integer
+	dim res as integer
+	res=getmouse(xx,yy,,bb)
+	if bb=1 then
+		if xx>c1.x and yy>c1.y and xx<c1.x+c1.ww and yy<c1.y+c1.hh then
+			c1.on_click()
+		end if
+	end if
+end sub 
+
+public sub imagesCreate(c1 as control)
+	c1.dc=imagecreate(c1.w,c1.h)
+	bload c1.caption,c1.dc
+	c1.on_check=procptr(onimagecheck())
+	c1.redraw=procptr(imageRedraw())
+end sub
 
 public sub buttonUp()
 	dim xx as integer
