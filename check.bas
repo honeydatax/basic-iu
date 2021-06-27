@@ -23,7 +23,6 @@ label1.controls.on_click=procptr(onexits)
 label1.controls.avalue=1
 while 1=1
 	label1.controls.on_check(label1.controls)
-	sleep 200
 	if inkey=chr(27) then system()
 wend
 imagedestroy(label1.controls.dc)

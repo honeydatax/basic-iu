@@ -23,7 +23,6 @@ options(0).redraws(options())
 options(0).on_click=procptr(onexits)
 while 1=1
 	options(0).on_checks(options())
-	sleep 200
 	if inkey=chr(27) then system()
 wend
 
